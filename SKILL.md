@@ -78,15 +78,45 @@ Parse-first, ask-second. Everything derivable from uploaded docs should come fro
    - **Resume variation index** — for each file in `resumes/`, a one-line summary of its emphasis (e.g., "PM-Growth tilt", "Technical PM with ML focus"). Used later to pick the best starting template.
 
 6. **Show the user what you parsed + ask only the gaps:**
-   Present a concise summary of what was extracted. Only ask the user for things that **couldn't be derived** or need confirmation:
-   - If address / city_state weren't found: ask (optional — used only for cover letter headers, skip if they don't want it).
-   - Any **hard constraints** not inferable from docs (remote-only, visa sponsorship, location limits, comp floor).
-   - Confirm inferred `target_roles` — *"I'm reading you as a PM / Growth hybrid — want me to add any other role types (PMM, GTM, etc.)?"*
+   Present a concise summary of what was extracted. Only ask for what **couldn't be derived**:
+   - If address / city_state weren't found: ask (optional — used only for cover letter headers).
    - Any corrections to parsed name/email/phone (typos, preferred email, etc.).
 
-   Update `config.json` and `profile.md` based on their answers.
+   Update `config.json` based on their answers.
 
-7. **Done.** Tell the user onboarding is complete and they can now share a job URL or description to start applying.
+7. **Targeting conversation** — run this BEFORE ending onboarding:
+
+   The goal is to build rich context so that when the user drops a job URL later, you can ask sharp personalization questions instead of generic ones. Have a real conversation (one question at a time, not a wall of them) covering:
+
+   - **Active role targets** — *"I inferred you're looking at {parsed_target_roles}. What's the actual job search right now — one or two specific role types, or broader exploration?"*
+   - **Company types & stage** — early-stage startup, growth-stage, big tech, non-tech, public sector, specific industries. What excites them, what they want to avoid.
+   - **Named targets** — are there specific companies on their list? (Useful for prioritization later.)
+   - **What to emphasize** — given multiple strong threads in the resumes, which do they want leaned into? (e.g., "I have shipping experience AND GTM experience — the PM roles I want should lean on the shipping side.")
+   - **What to move away from** — equally important. Experience they have but don't want to be pigeonholed into.
+   - **Hard constraints** — location (remote / hybrid / city), visa sponsorship needs, comp floor, earliest start date, anything else non-negotiable.
+   - **Career narrative** — in one sentence, the story they want to tell. *("Designer who learned to ship and now wants to lead zero-to-one consumer products.")*
+   - **Recent wins not yet on paper** — anything significant from the last 6-12 months not yet reflected in the uploaded resumes. Note these separately so they can be woven into future applications even if the base resume hasn't been updated.
+
+   Save the output to `~/.job-apply/profile.md` under a new section:
+
+   ```markdown
+   ## Targeting & narrative
+
+   **Active targets**: ...
+   **Company types**: ...
+   **Named targets** (if any): ...
+   **Emphasize**: ...
+   **Move away from**: ...
+   **Hard constraints**: ...
+   **Narrative (one-liner)**: ...
+   **Recent wins not on paper**: ...
+   ```
+
+   Also update `config.json`:
+   - `target_roles`: confirmed list
+   - `constraints`: combined string of hard constraints
+
+8. **Done.** Summarize what you now know about them and confirm they're ready to start applying — *"Drop a job URL or paste a JD when you're ready. I'll use everything we just discussed to ask sharp personalization questions before tailoring."*
 
 ## Inputs (after setup)
 
@@ -115,13 +145,18 @@ Read `~/.job-apply/profile.md` (resume variation index section) and recommend th
 
 ## Step 3 — Match Against Profile
 
-1. Read `~/.job-apply/profile.md` and the recommended resume.
+1. Read `~/.job-apply/profile.md` (including the **Targeting & narrative** section) and the recommended resume.
 2. Identify **strong matches** between user's experience and role requirements.
 3. Identify **gaps** — requirements the profile doesn't clearly address.
-4. Suggest which experiences/projects to **emphasize, reframe, or add**.
+4. Suggest which experiences/projects to **emphasize, reframe, or add** — weighted by the user's stated `Emphasize` / `Move away from` preferences.
 5. Recommend specific **keyword integrations** that are natural, not stuffed.
 
-Ask the user before generating anything — including any clarifying questions about projects or framing that would strengthen the tailoring.
+Before generating anything, ask the user **sharp, specific personalization questions** informed by the targeting conversation. Good questions reference what you already know:
+- *"You said you want to lean into shipping over GTM — for this PM role, the JD emphasizes launch strategy. Want me to frame your launch work as product ownership or keep it more GTM-flavored to match their language?"*
+- *"This is one of your named targets. Any recent conversations or insights about the team I should weave into the cover letter?"*
+- *"You mentioned {recent win not on paper}. Relevant here — want me to include it?"*
+
+Bad questions are generic ones you could have answered yourself from the profile.
 
 ## Step 4 — Generate Requested Output
 
