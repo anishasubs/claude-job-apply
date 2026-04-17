@@ -1,0 +1,26 @@
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+.venv/
+venv/
+env/
+
+.DS_Store
+Thumbs.db
+*.swp
+.idea/
+.vscode/
+
+*.log
+.env
+.env.local
+
+# Never commit user data — the skill writes to ~/.job-apply/ (outside the repo),
+# but guard against accidental copies landing inside the working dir.
+applications/
+tracker.xlsx
+resumes/
+cover-letters/
+profile.md
+config.json

@@ -1,0 +1,15 @@
+{
+  "name": "Jane Doe",
+  "address": "123 Main Street,",
+  "city_state": "New York, NY",
+  "email": "jane@example.com",
+  "salutation": "Dear Hiring Manager,",
+  "paragraphs": [
+    "Opening paragraph — hook the reader with something specific about the company and the role. Reference a real product, campaign, or announcement.",
+    "Proof paragraph — 2-3 concrete examples from your background mapped to the role's top requirements. Use numbers.",
+    "Differentiator paragraph — the unique perspective or combination of skills you bring that other candidates likely don't.",
+    "Close — enthusiasm and a clear next step. No groveling."
+  ],
+  "closing": "Warm regards,",
+  "signature": "Jane Doe"
+}

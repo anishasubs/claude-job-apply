@@ -1,0 +1,39 @@
+{
+  "name": "Jane Doe",
+  "phone": "555-123-4567",
+  "email": "jane@example.com",
+  "experience": [
+    {
+      "company": "Acme Corp",
+      "location": "New York, NY",
+      "company_date": "Present",
+      "title": "Senior Product Manager",
+      "title_date": null,
+      "description": "Enterprise SaaS platform serving 10,000+ customers.",
+      "description_date": "2022 - Present",
+      "bullets": [
+        "Led cross-functional launch of new analytics module; drove 34% increase in weekly active users.",
+        "Owned roadmap for core product area ($12M ARR); shipped 4 major releases on time.",
+        "Partnered with sales to build enablement materials, reducing deal cycle by 18%."
+      ]
+    },
+    {
+      "company": "Beta Inc",
+      "location": "San Francisco, CA",
+      "company_date": null,
+      "title": "Product Manager",
+      "title_date": "2019 - 2022",
+      "description": "Consumer fintech app with 2M+ users.",
+      "description_date": null,
+      "bullets": [
+        "Ran 12 A/B tests on onboarding; increased activation rate from 41% to 58%.",
+        "Shipped in-app referral program driving 22% of new signups."
+      ]
+    }
+  ],
+  "additional": [
+    "Skills: SQL, Figma, Amplitude, Notion, Jira, A/B testing, user research",
+    "Certifications: Reforge Product Strategy (2023), Pragmatic PMM (2022)",
+    "Interests: Endurance running, jazz piano, urban sketching"
+  ]
+}
