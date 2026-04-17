@@ -1,6 +1,6 @@
 ---
-name: job-apply
-description: Tailor resumes, write cover letters, and draft outreach for job applications. Works for any role type (PM, PMM, Growth, GTM, SWE, Marketing, Design, etc.). Auto-trigger when the user shares a job posting URL (linkedin.com/jobs, greenhouse.io, lever.co, ashbyhq.com, myworkdayjobs.com) or pastes a job description.
+name: get-me-a-job
+description: Tailor resumes, write cover letters, draft outreach, and keep an application tracker pristine. Works for any role type (PM, PMM, Growth, GTM, SWE, Marketing, Design, etc.). Auto-trigger when the user shares a job posting URL (linkedin.com/jobs, greenhouse.io, lever.co, ashbyhq.com, myworkdayjobs.com) or pastes a job description.
 ---
 
 # Job Application Assistant
@@ -301,13 +301,13 @@ Write `tracker-entry.json` in the company folder:
 
 Run:
 ```
-python ~/.claude/skills/job-apply-public/scripts/update_tracker.py ~/.job-apply/tracker.xlsx add <path-to-tracker-entry.json>
+python ~/.claude/skills/get-me-a-job/scripts/update_tracker.py ~/.job-apply/tracker.xlsx add <path-to-tracker-entry.json>
 ```
 
 ### Update a status
 
 ```
-python ~/.claude/skills/job-apply-public/scripts/update_tracker.py ~/.job-apply/tracker.xlsx update <row#> status "Applied"
+python ~/.claude/skills/get-me-a-job/scripts/update_tracker.py ~/.job-apply/tracker.xlsx update <row#> status "Applied"
 ```
 
 Fields: company, role, type, date_applied, status, resume, cover_letter, outreach, referral, comp, notes, url.
@@ -320,10 +320,10 @@ When the user runs `/job-apply tracker` or `/job-apply status`, read the Excel f
 ## Step 6 — Generate .docx + .pdf files
 
 ### Resume .docx
-1. Write structured resume content to `resume-content.json` in the application folder. Schema: see `~/.claude/skills/job-apply-public/templates/resume-content.example.json`.
+1. Write structured resume content to `resume-content.json` in the application folder. Schema: see `~/.claude/skills/get-me-a-job/templates/resume-content.example.json`.
 2. Run:
    ```
-   python ~/.claude/skills/job-apply-public/scripts/generate_resume.py \
+   python ~/.claude/skills/get-me-a-job/scripts/generate_resume.py \
      <content.json> <output.docx> \
      --template ~/.job-apply/resumes/<chosen-base-resume>.docx
    ```
@@ -335,10 +335,10 @@ When the user runs `/job-apply tracker` or `/job-apply status`, read the Excel f
 - `title_date`: in parens after title, non-bold (e.g., "2021 - 2024"). `null` if not needed.
 
 ### Cover Letter .docx
-1. Write content to `cover-letter-content.json`. Schema: see `~/.claude/skills/job-apply-public/templates/cover-letter-content.example.json`.
+1. Write content to `cover-letter-content.json`. Schema: see `~/.claude/skills/get-me-a-job/templates/cover-letter-content.example.json`.
 2. Run:
    ```
-   python ~/.claude/skills/job-apply-public/scripts/generate_cover_letter.py \
+   python ~/.claude/skills/get-me-a-job/scripts/generate_cover_letter.py \
      <content.json> <output.docx>
    ```
    Optional: `--font "Garamond" --size 11` to match user's font preferences from `config.json`.
@@ -346,7 +346,7 @@ When the user runs `/job-apply tracker` or `/job-apply status`, read the Excel f
 
 ### PDF conversion
 ```
-python ~/.claude/skills/job-apply-public/scripts/docx_to_pdf.py <file.docx> [file2.docx ...]
+python ~/.claude/skills/get-me-a-job/scripts/docx_to_pdf.py <file.docx> [file2.docx ...]
 ```
 Requires Microsoft Word on Windows/Mac, or LibreOffice on Linux (via `docx2pdf`).
 

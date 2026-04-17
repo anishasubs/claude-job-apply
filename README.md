@@ -1,116 +1,146 @@
-# job-apply (public)
+# get-me-a-job 💼
 
-A Claude Code skill that helps you tailor resumes, write cover letters, and draft outreach for job applications. Works for any role type (PM, PMM, Growth, GTM, SWE, Marketing, Design, Data, etc.).
+> **A Claude Code skill that tailors your resume, writes your cover letter, drafts your outreach, and actually updates your tracker — so you can stop pretending you'll "clean up later."**
 
-## What it does
+## The problem 😩
 
-When you share a job URL or paste a job description, Claude will:
+Your job search folder looks like this:
 
-1. **Analyze the role** — extract key requirements, keywords, culture signals.
-2. **Pick the right resume starting point** from the variations you've uploaded.
-3. **Tailor your resume** — restructure bullets, weave in keywords naturally, keep it one page.
-4. **Draft a cover letter** — 3-4 tight paragraphs in your voice.
-5. **Draft outreach** — LinkedIn, cold email, referral asks.
-6. **Export polished files** — both `.docx` and `.pdf` for resume and cover letter.
-7. **Update a tracker** — styled Excel spreadsheet with color-coded status flow.
+```
+Resume_FINAL.docx
+Resume_FINAL_v2.docx
+Resume_FINAL_v2_actually_final.docx
+Resume_Stripe_edit_2.docx
+Resume_use_this_one.docx
+cover letter.docx
+cover letter (1).docx
+```
 
-Everything is saved under `~/.job-apply/applications/{company-slug}/`.
+You opened your applications tracker spreadsheet twice this month. It's out of date. You meant to ask your friend for that referral three weeks ago.
 
-## Installation
+Every new job post means re-uploading your resume to Claude, re-explaining your background, re-pasting the JD, and hoping the output is usable. Then you eyeball it for typos and send it off.
 
-### 1. Clone this repo into your Claude Code skills directory
+This skill fixes that. ✨
+
+## What it does 🧠
+
+You drop your existing resumes and cover letters in once. Claude:
+
+- 📄 **Learns your story** — parses your name, contact info, accomplishments, projects, and the *layout* of your resume (section order, header style, bullet density)
+- 🎯 **Asks sharp targeting questions** — roles, companies, what to emphasize, what to avoid, hard constraints, recent wins not on paper
+- 🔗 **Takes a job URL** (LinkedIn, Greenhouse, Lever, Ashby, Workday — anything) and reads the JD
+- 🔍 **Shows you a preview** of what it'll highlight + flags gaps before writing a single file
+- ✍️ **Writes the resume** tailored to that role, as a one-page `.docx` + `.pdf` that matches YOUR formatting
+- 💌 **Writes the cover letter** in your voice, based on past cover letters you uploaded
+- 📬 **Drafts outreach** — LinkedIn connect, cold email, referral asks, follow-ups
+- 📊 **Updates your tracker** automatically — a styled Excel spreadsheet with color-coded status flow, company, role, comp, notes, URL, the lot
+- 🔄 **Invites revisions** at every step — change a bullet, a cover letter paragraph, an outreach message, a tracker field. Iteration is expected, not punished.
+
+No more v1, v2, v2_final. One folder per application. Clean names. Pristine outputs. ✨
+
+## Installation 🚀
+
+### 1. Clone the repo into your Claude Code skills folder
 
 **macOS / Linux:**
 ```bash
-git clone https://github.com/anishasubs/claude-job-apply ~/.claude/skills/job-apply
+git clone https://github.com/anishasubs/get-me-a-job ~/.claude/skills/get-me-a-job
 ```
 
 **Windows (Git Bash or WSL):**
 ```bash
-git clone https://github.com/anishasubs/claude-job-apply "$USERPROFILE/.claude/skills/job-apply"
+git clone https://github.com/anishasubs/get-me-a-job "$USERPROFILE/.claude/skills/get-me-a-job"
 ```
 
 **Windows (PowerShell):**
 ```powershell
-git clone https://github.com/anishasubs/claude-job-apply "$env:USERPROFILE\.claude\skills\job-apply"
+git clone https://github.com/anishasubs/get-me-a-job "$env:USERPROFILE\.claude\skills\get-me-a-job"
 ```
 
-To update later: `cd ~/.claude/skills/job-apply && git pull`.
+To update later: `cd ~/.claude/skills/get-me-a-job && git pull` 🔁
 
-### 2. Install Python dependencies
+### 2. Install Python dependencies 🐍
 
-```
+```bash
 pip install python-docx openpyxl docx2pdf lxml
 ```
 
 ### 3. Install Microsoft Word (or LibreOffice)
 
 PDF conversion uses `docx2pdf`, which requires:
-- **Windows / macOS**: Microsoft Word installed locally
-- **Linux**: LibreOffice installed locally
+- 🪟 **Windows / 🍎 macOS**: Microsoft Word installed locally
+- 🐧 **Linux**: LibreOffice installed locally
 
 ### 4. Restart Claude Code
 
-The skill will register automatically.
+The skill auto-registers. ✅
 
 ### 5. First-time setup
 
 Type:
-
 ```
-/job-apply
+/get-me-a-job
 ```
 
-Claude will walk you through:
+Claude will walk you through it:
+- 📂 Drop 1–5 of your existing resumes (`.docx` and `.pdf`) into `~/.job-apply/resumes/`
+- 💌 Drop 0–5 of your past cover letters into `~/.job-apply/cover-letters/` (optional — for voice)
+- 🤖 Claude reads them, extracts your identity + accomplishments + layout preferences
+- 🗣️ Claude has a targeting conversation with you — roles, companies, constraints, narrative
+- ✅ Done. You're ready to apply.
 
-- Entering your name, contact info, and target role types
-- Uploading 1–5 resume variations (to `~/.job-apply/resumes/`)
-- Uploading 0–5 reference cover letters (to `~/.job-apply/cover-letters/`)
-- Extracting a profile of your accomplishments from those files
-
-## Resume template requirements
-
-The resume generator works by **cloning your uploaded resume** and replacing content while preserving your formatting. For this to work, at least one of your `.docx` resumes must have:
-
-- A paragraph with the literal text **`Experience`** as a section header
-- A paragraph with the literal text **`Additional Information`** as a section header (marking the end of experience)
-- Between them, at least one complete experience entry that includes:
-  - A **bold** paragraph for the company name
-  - An *italic* paragraph for a role description (optional but recommended)
-  - A **bold** paragraph for the job title
-  - Bulleted paragraphs for accomplishments
-
-If your resumes don't match this structure, Claude will tell you during setup and offer to help restructure one into a usable template.
-
-## Usage
+## Usage 💼
 
 After setup, just share a job:
 
 ```
-/job-apply https://linkedin.com/jobs/view/1234567890
+/get-me-a-job https://linkedin.com/jobs/view/1234567890
 ```
 
-or paste a job description directly.
+Or paste a JD directly:
+```
+/get-me-a-job
+[paste job description]
+```
 
-Claude will analyze the role and confirm before generating anything.
+Or just drop a URL in normal chat — the skill auto-triggers from the URL pattern.
 
-### Other commands
+### What happens next 🔄
 
-- `/job-apply tracker` — show current application tracker contents
-- `/job-apply status` — same as above
-- Mention a referral: *"I have a referral at Stripe, a former colleague named Alex Kim"* — Claude will ask follow-ups and generate referral-appropriate outreach.
+1. Claude analyzes the role (requirements, keywords, culture)
+2. Picks the best starting resume from your uploads
+3. Shows you a **pre-generation preview**: what it'll highlight, what it'll lead with in the cover letter, keywords it'll weave in, gaps it'll flag, questions for you
+4. Waits for your approval (tweak anything first)
+5. Generates the tailored resume (`.docx` + `.pdf`), cover letter (`.docx` + `.pdf`), outreach messages, and updates the Excel tracker
+6. Presents everything as a clean summary and invites revisions
 
-## File layout
+### Other commands 🛠
+
+- `/get-me-a-job tracker` — show your application tracker
+- `/get-me-a-job status` — same
+- Mention a referral in chat ("I have a referral at Stripe, my friend Alex") — Claude asks follow-ups and generates referral-specific outreach
+
+## Resume template requirement ⚠️
+
+The resume generator clones your uploaded `.docx` to preserve YOUR formatting. For this to work, at least one of your `.docx` resumes must contain:
+
+- A paragraph with the literal text **`Experience`** as a section header
+- A paragraph with the literal text **`Additional Information`** as a section header
+- Between them, at least one complete experience entry with bold company, italic description, bold title, and bulleted accomplishments
+
+If your resumes don't match, Claude will flag it during setup and offer to help restructure one into a usable template. 🛠️
+
+## File layout 📁
 
 ```
 ~/.job-apply/
-  config.json           # your identity + preferences
-  profile.md            # extracted accomplishments & themes
-  tracker.xlsx          # styled application tracker
-  resumes/              # your uploaded resume variations
-  cover-letters/        # reference cover letters
+  config.json                    # 🧾 you — name, email, preferences
+  profile.md                     # 🧠 accomplishments, targeting, style
+  tracker.xlsx                   # 📊 application tracker (auto-updated)
+  resumes/                       # 📥 your uploaded base resumes
+  cover-letters/                 # 💌 your past cover letters (reference)
   applications/
-    {company-slug}/     # one folder per application
+    {company-slug}/              # 🏢 one folder per application
       role-analysis.md
       resume-content.json
       {FirstName}_{LastName}_Resume_{Company}.docx
@@ -122,16 +152,18 @@ Claude will analyze the role and confirm before generating anything.
       tracker-entry.json
 ```
 
-## What it won't do
+No v1/v2/v3 chaos. No orphan drafts. ✨
 
-- Fabricate experience you don't have
-- Exceed one page on the resume
-- Stuff keywords unnaturally
-- Store sensitive info (SSN, passport, salary details) unless you explicitly ask
+## What it won't do 🚫
 
-## Scripts reference
+- ❌ Fabricate experience you don't have
+- ❌ Exceed one page on the resume
+- ❌ Stuff keywords unnaturally
+- ❌ Store sensitive info (SSN, passport, comp details) unless you explicitly ask
 
-All scripts are in `scripts/` and can be invoked directly:
+## Scripts reference 📚
+
+All scripts live in `scripts/` and can be invoked directly if you want:
 
 - `generate_resume.py <content.json> <output.docx> --template <template.docx>`
 - `generate_cover_letter.py <content.json> <output.docx> [--font NAME] [--size N]`
@@ -140,10 +172,12 @@ All scripts are in `scripts/` and can be invoked directly:
 
 Example JSON schemas live in `templates/`.
 
-## License
+## License 📜
 
 MIT — use, modify, and redistribute freely.
 
 ---
 
-Built by **[Anisha Subberwal](https://anishasubs.github.io/portfolio/)**. If this skill saves you time on your job hunt, a star on the repo is appreciated.
+Built by **[Anisha Subberwal](https://anishasubs.github.io/portfolio/)** ☕
+
+If this skill saves you from one more `Resume_FINAL_v3_actually_this_one.docx`, a ⭐ on the repo is appreciated.
