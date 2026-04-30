@@ -1,4 +1,6 @@
-# get-me-a-job 💼
+![get-me-a-job](banner.png)
+
+# get-me-a-job 💼☕
 
 > **A Claude Code skill that tailors your resume, writes your cover letter, drafts your outreach, and actually updates your tracker — so you can stop pretending you'll "clean up later."**
 
