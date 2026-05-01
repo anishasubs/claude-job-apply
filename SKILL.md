@@ -199,9 +199,13 @@ Extract and present a brief analysis:
 
 Ask the user to confirm or adjust before proceeding.
 
-## Step 2 — Select Resume Starting Version
+## Step 2 — Select Resume Starting Version (content base only)
 
-Read `~/.get-me-a-job/profile.md` (resume variation index section) and recommend the best uploaded resume to use as the template for this role. Explain your reasoning in one line. Let the user override.
+Pick the resume whose **content** is closest to the role — bullets, accomplishments, emphasis. **Do not re-pick the formatting template here.** The layout template was locked during onboarding (`config.json` → `layout_template`) and is reused on every run for visual consistency.
+
+Read `~/.get-me-a-job/profile.md` (resume variation index section) and recommend which uploaded resume's *content* to start from for this role. Explain your reasoning in one line. Let the user override.
+
+If the chosen content base happens to be the same file as the locked layout template, that's fine. If it's a different file, that's also fine — content selection and layout cloning are independent.
 
 ## Step 3 — Match Against Profile + Pre-Generation Preview
 
@@ -368,13 +372,14 @@ When the user runs `/job-apply tracker` or `/job-apply status`, read the Excel f
 
 ### Resume .docx
 1. Write structured resume content to `resume-content.json` in the application folder. Schema: see `~/.claude/skills/get-me-a-job/templates/resume-content.example.json`.
-2. Run:
+2. Read `config.json` → `layout_template`. This is the file you clone for formatting on **every** run, locked during onboarding. Do not substitute the per-application content base here.
+3. Run:
    ```
    python ~/.claude/skills/get-me-a-job/scripts/generate_resume.py \
      <content.json> <output.docx> \
-     --template ~/.get-me-a-job/resumes/<chosen-base-resume>.docx
+     --template ~/.get-me-a-job/resumes/{config.layout_template}
    ```
-3. Naming: `{FirstName}_{LastName}_Resume_{Company}_{Role}.docx`.
+4. Naming: `{FirstName}_{LastName}_Resume_{Company}_{Role}.docx`.
 
 **Experience entry date fields** (see example JSON):
 - `company_date`: right-aligned on company line, non-bold (e.g., "Present"). `null` if date is on description line.
