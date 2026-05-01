@@ -114,6 +114,36 @@ Parse-first, ask-second. Everything derivable from uploaded docs should come fro
 
    Update `config.json` based on their answers.
 
+6a. **One-time layout confirmation** — ask this once during onboarding, never again per-application:
+
+   Present the detected layout signature in a compact block:
+
+   ```
+   I'll use {filename}.docx as the formatting template for every tailored resume.
+
+   Layout signature I detected:
+     • Section order: {Education → Experience → Additional Information}
+     • Header style: {bold company name, italic description, dates right-aligned}
+     • Bullet density: {2–3 per role, ~1.5 lines each}
+     • Font: {Times New Roman 10pt}
+     • Custom sections preserved: {Languages, Volunteer}
+   ```
+
+   **Decision rules** (skip the question when the answer is unambiguous):
+   - **Only one .docx uploaded** → don't ask. Just show the signature one-line and move on.
+   - **All uploaded .docx files share the same layout** → don't ask. Show the signature, name the file you'll clone.
+   - **2+ .docx files with different layouts** → ask: *"Which file should I use as the base layout for tailored resumes? I'll clone its formatting every time."* List them with the one-line emphasis you wrote in the resume variation index. Save the choice to `config.json` as `"layout_template": "{filename}.docx"`.
+   - **The detected layout fails the template requirement** (no `Experience` / `Additional Information` headers) → flag and offer to help restructure one of their files. Don't proceed until a valid template exists.
+
+   Always end this step with: *"If anything in that signature is wrong, tell me now and I'll re-parse — fixing layout signals later means regenerating every tailored resume."*
+
+6b. **Confirm the one-page hard rule:**
+
+   State plainly: *"One more thing — every tailored resume I generate is a hard one-page cap. If your content runs long, I'll cut the least relevant bullets first and tell you what I cut. I won't ever ship a two-page resume. Sound right?"*
+
+   - If the user confirms: save `"one_page_only": true` to `config.json` and proceed.
+   - If the user says they want a two-page exception (e.g., academic CV use case): save `"one_page_only": false` and note in `profile.md` under **Style & layout** that they've opted into multi-page output.
+
 7. **Targeting conversation** — run this BEFORE ending onboarding:
 
    The goal is to build rich context so that when the user drops a job URL later, you can ask sharp personalization questions instead of generic ones. Have a real conversation (one question at a time, not a wall of them) covering:
